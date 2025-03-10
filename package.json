@@ -1,0 +1,13 @@
+{
+  "name": "@anvos/agentify-components",
+  "version": "0.0.1",
+  "description": "A framework for agentifying components",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node examples/index.js",
+    "test": "echo 'Tests coming soon!'"
+  },
+  "dependencies": {
+    "react": "^18.2.0"
+  }
+} 
