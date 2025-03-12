@@ -1,39 +1,56 @@
-import React from 'react';
-import { registerComponent } from '../utils/registry';
+import React, { useEffect } from 'react';
+import { registerAgentifiedComponent } from '../utils/registry';
 
 /**
- * Higher-order component that wraps a search bar and adds "agentified" behavior
+ * Higher-order component that adds agentification to search bar components
  * 
- * @param {React.Component} WrappedComponent - The component to wrap
- * @returns {React.Component} - The enhanced component
+ * @param {Object} config - Configuration for the search bar
+ * @param {Object} config.behavior - Behavior configuration
+ * @param {string} config.behavior.type - 'navigation' or 'api'
+ * @param {string} [config.behavior.page] - Target page for navigation search
+ * @param {string} [config.behavior.queryParam] - Query parameter name
+ * @param {string} [config.behavior.endpoint] - API endpoint for API search
+ * @param {string} [config.behavior.method] - HTTP method for API search
+ * @returns {Function} - The HOC function
  */
-export function agentifySearchBar(WrappedComponent) {
+export const agentifySearchBar = (config) => (WrappedComponent) => {
   return function AgentifiedSearchBar(props) {
-    // Register the component in the registry
-    React.useEffect(() => {
-      registerComponent('SearchBar', { 
-        type: 'input', 
-        behavior: 'search',
-        capabilities: ['text-search', 'query-enhancement']
+    useEffect(() => {
+      // Register the component with the specified configuration
+      registerAgentifiedComponent({
+        type: 'search-bar',
+        behavior: config.behavior,
+        selector: config.selector || null,
+        description: config.description || 'Search component',
+        // capabilities: ['text-search', 'query-enhancement']
       });
     }, []);
 
-    // Add enhanced behavior (e.g., intelligent search handling)
-    const handleSearch = (value) => {
-      console.log(`Searching: ${value}`);
+    // // Function to handle search based on behavior type
+    // const handleSearch = (value) => {
+    //   console.log(`Searching: ${value}`);
       
-      // Here you would eventually add intelligent behavior:
-      // - Query enhancement
-      // - Search suggestions
-      // - Action inference
-      
-      // For now, pass through to the original handler if it exists
-      if (props.onSearch) {
-        props.onSearch(value);
-      }
-    };
+    //   if (config.behavior.type === 'navigation') {
+    //     // Handle navigation search (in real implementation)
+    //     console.log(`Would navigate to: ${config.behavior.page}?${config.behavior.queryParam}=${value}`);
+    //   } else if (config.behavior.type === 'api') {
+    //     // Handle API search (in real implementation)
+    //     console.log(`Would call API: ${config.behavior.endpoint} with method ${config.behavior.method} and query ${value}`);
+    //   }
+
+    //   //   Potential intelligent behavior:
+    //     // - Query enhancement
+    //     // - Search suggestions
+    //     // - Action inference
+
+
+    //   // Call original onSearch if provided
+    //   if (props.onSearch) {
+    //     props.onSearch(value);
+    //   }
+    // };
 
     // Pass the enhanced handler to the wrapped component
-    return <WrappedComponent {...props} onSearch={handleSearch} />;
+    return <WrappedComponent {...props} />;
   };
-} 
+}; 

@@ -1,47 +1,146 @@
 /**
  * Registry for agentified components
- * Stores metadata about components and generates configuration
+ * Stores metadata about components and generates configuration for MCP
  */
 
 // Store for component metadata
-const registry = {};
+const componentRegistry = [];
 
 /**
- * Register a component in the registry
- * @param {string} name - Component identifier
- * @param {object} metadata - Component metadata
+ * Generates a unique ID for registered components
+ * @returns {string} A unique identifier
  */
-export function registerComponent(name, metadata) {
-  registry[name] = {
+const generateUniqueId = () => {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+};
+
+/**
+ * Validates component metadata based on its type
+ * @param {object} metadata - The component metadata to validate
+ * @returns {boolean} True if valid, throws error if invalid
+ */
+const validateMetadata = (metadata) => {
+  if (!metadata.type) {
+    throw new Error('Component metadata must include a type');
+  }
+  
+  // Type-specific validation
+  switch (metadata.type) {
+    case 'search-bar':
+      if (!metadata.behavior || !metadata.behavior.type) {
+        throw new Error('Search bar metadata must include behavior type');
+      }
+      if (metadata.behavior.type === 'navigation' && (!metadata.behavior.page || !metadata.behavior.queryParam)) {
+        throw new Error('Navigation search bar must specify page and queryParam');
+      }
+      if (metadata.behavior.type === 'api' && (!metadata.behavior.endpoint || !metadata.behavior.method)) {
+        throw new Error('API search bar must specify endpoint and method');
+      }
+      break;
+      
+    case 'form':
+      if (!metadata.behavior || !metadata.behavior.type) {
+        throw new Error('Form metadata must include behavior type');
+      }
+      if (!metadata.fields || !Array.isArray(metadata.fields) || metadata.fields.length === 0) {
+        throw new Error('Form metadata must include fields array');
+      }
+      if (metadata.behavior.type === 'navigation' && (!metadata.behavior.action || !metadata.behavior.method)) {
+        throw new Error('Navigation form must specify action and method');
+      }
+      if (metadata.behavior.type === 'api' && (!metadata.behavior.endpoint || !metadata.behavior.method)) {
+        throw new Error('API form must specify endpoint and method');
+      }
+      break;
+      
+    case 'button':
+      if (!metadata.behavior || !metadata.behavior.type) {
+        throw new Error('Button metadata must include behavior type');
+      }
+      if (!metadata.label) {
+        throw new Error('Button metadata must include a label');
+      }
+      if (metadata.behavior.type === 'navigation' && !metadata.behavior.href) {
+        throw new Error('Navigation button must specify href');
+      }
+      if (metadata.behavior.type === 'api' && (!metadata.behavior.endpoint || !metadata.behavior.method)) {
+        throw new Error('API button must specify endpoint and method');
+      }
+      if (metadata.behavior.type === 'ui' && (!metadata.behavior.action || !metadata.behavior.target)) {
+        throw new Error('UI button must specify action and target');
+      }
+      break;
+      
+    default:
+      throw new Error(`Unknown component type: ${metadata.type}`);
+  }
+  
+  return true;
+};
+
+/**
+ * Register an agentified component in the registry
+ * @param {object} metadata - Component metadata
+ * @returns {object} The registered component metadata
+ */
+export const registerAgentifiedComponent = (metadata) => {
+  // Validate the metadata
+  validateMetadata(metadata);
+  
+  // Add to registry with additional metadata
+  const registeredComponent = {
+    id: generateUniqueId(),
     ...metadata,
     registeredAt: new Date().toISOString()
   };
   
-  console.log(`Component '${name}' registered with agentify.`);
-  return registry[name];
-}
+  componentRegistry.push(registeredComponent);
+  
+  // Log to console during development
+  if (process.env.NODE_ENV === 'development') {
+    console.log('Registered agentified component:', metadata);
+  }
+  
+  return registeredComponent;
+};
 
 /**
- * Get the complete registry
- * @returns {object} The registry object
+ * Get all registered components
+ * @returns {Array} Array of registered components
  */
-export function getRegistry() {
-  return { ...registry };
-}
+export const getRegisteredComponents = () => {
+  return [...componentRegistry];
+};
 
 /**
  * Generate configuration for MCP server
  * @returns {string} JSON configuration
  */
-export function getConfig() {
-  return JSON.stringify(registry, null, 2);
-}
+export const generateMCPConfig = () => {
+  // TODO: Implement MCP configuration generator , componentRegistry 
+
+  return
+};
+
+/**
+ * Write MCP configuration to a file (to be used during build)
+ * @param {string} filename - The filename to write to
+ * @param {function} writeFile - File system write function
+ */
+export const writeMCPConfig = (filename, writeFile) => {
+  const config = generateMCPConfig();
+  writeFile(filename, config, (err) => {
+    if (err) {
+      console.error('Error writing MCP config:', err);
+    } else {
+      console.log(`MCP configuration written to ${filename}`);
+    }
+  });
+};
 
 /**
  * Clear the registry
  */
-export function clearRegistry() {
-  Object.keys(registry).forEach(key => {
-    delete registry[key];
-  });
-} 
+export const clearRegistry = () => {
+  componentRegistry.length = 0;
+}; 
