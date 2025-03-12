@@ -20,7 +20,9 @@ Specfically, when an AI agent interacts with these applications, it lacks contex
 
 Developers need a standardized way to make their UI components "self-describing" to enable richer AI-powered experiences and workflows.
 
+## 3. Current Solutions
 
+Go through the docs and learn on your own, how to create, deploy and run an MCP server
 
 ## 4. Product Features
 
@@ -76,63 +78,21 @@ Developers need a standardized way to make their UI components "self-describing"
   - Helpful error messages
   - Runtime validation
 
-## 5. Technical Requirements
-
-### 5.1 Component Implementation
-
-- React 16.8+ with Hooks support
-- Pure JavaScript implementation
-- Component decorator pattern using Higher-Order Components
-- Support for all common React patterns (functional components, class components)
-
-### 5.2 Component Metadata Format
-
-- JSON-serializable metadata
-- Standard schema for each component type
-- Extensible for future component types
-
-### 5.3 Build Integration
-
-- Node.js script for build-time configuration generation
-- Integration with common build systems (webpack, rollup)
-- File generation utilities
-
-### 5.4 Performance Requirements
-
-- Minimal runtime performance impact
-- Lazy registration of components
-- Small bundle size impact
-
-## 6. User Experience
-
-### 6.1 Developer Experience
-
-- Simple, declarative API
-- Clear documentation with examples
-- Intuitive configuration options
-- Helpful error messages for invalid configurations
-
-### 6.2 End-User Experience
-
-- No visible changes to UI components
-- Enhanced interactions when used with AI systems
-- Seamless integration with existing components
-
-## 7. Success Metrics
+## 5. Success Metrics
 
 - **Developer Adoption:** Number of projects using the framework
 - **Component Coverage:** Percentage of UI components that are "agentified"
 - **AI Integration:** Number of AI tools/agents successfully using the component metadata
 - **Performance Impact:** Bundle size increase and runtime performance overhead
 
-## 8. Constraints and Limitations
+## 6. Constraints and Limitations
 
 - React-only support in initial version
 - No direct support for other frameworks (Vue, Angular, etc.)
 - Limited to client-side component registration
 - Requires components to be rendered at least once for registration
 
-## 9. Future Considerations
+## 7. Future Considerations
 
 - Static analysis tools to extract component metadata
 - Visual editor for component configuration
