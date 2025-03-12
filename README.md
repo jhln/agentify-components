@@ -2,6 +2,8 @@
 
 A lightweight framework to make your components smarter by attaching semantic metadata for AI agents and automation tools.
 
+# Not FINISHED
+
 ## Installation
 
 ```bash
