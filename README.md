@@ -15,7 +15,7 @@ This framework adds a semantic layer to your components through decorators that:
 
 1. **Register component metadata** - Define what a component does and how it behaves
 2. **Provide a standardized schema** - Create consistent metadata structures for different component types
-3. **Generate configuration files** - Create MCP (Mission Control Protocol) configurations at build time
+3. **Generate configuration files** - Create an MCP server at build time
 
 > 🚀 **Note:** This framework focuses on *component metadata* rather than behavior modification. It makes your components "self-describing" to AI systems without changing their functionality.
 
