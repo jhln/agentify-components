@@ -1,6 +1,7 @@
 
     FROM node:22.12-alpine AS builder
-   # CHANGE THIS TO THE CORRECT PATH
+    # CHANGE THIS TO THE CORRECT PATH
+
     COPY src/postgres /app   
     COPY tsconfig.json /tsconfig.json
 

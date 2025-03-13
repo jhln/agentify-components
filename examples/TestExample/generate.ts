@@ -1,4 +1,4 @@
-import { generateMCPServer } from '../../src/index';
+import { generateMCPServer } from '@anvos/agentify-components';
 import * as components from './components/ButtonExample';
 
 const componentList = Object.values(components);

@@ -145,24 +145,31 @@ export class CheckoutButton extends React.Component {
 }
 ```
 
-## Generating MCP Configuration
+## Generating MCP Server
 
-During your build process, you can generate an MCP server. Add these scripts to your package.json:
+Add generate.ts file to the root of the project and add the following code:
+
+```javascript
+import { generateMCPServer } from '@anvos/agentify-components';
+import * as components from './components/ButtonExample';
+
+const componentList = Object.values(components);
+
+console.log(componentList);
+generateMCPServer(componentList, './mcpServer');
+
+```
+
+Now, add the following scripts to your package.json:
 
 ```javascript
 "scripts": {
-  "build:mcp": "agentify-mcp-build",
-  "deploy:mcp": "agentify-mcp-deploy"
+  "build:mcp": "ts-node ./generate.ts",
+  "deploy:mcp": "echo 'STILL WORKING ON IT'"
 }
 ```
 
-Then run the build command to generate your MCP configuration:
-
-```bash
-npm run build:mcp
-```
-
-This will scan your codebase for agentified components and generate an MCP server configuration file in the `/mcp` directory.
+This will scan your codebase for agentified components and generate an MCP server in the `/mcpServer` directory.
 
 To deploy your MCP server:
 
@@ -171,6 +178,8 @@ npm run deploy:mcp
 ```
 
 This will deploy your MCP server to the Anvos community MCP servers on GitHub where users can easily access it. Your configuration will be available via a unique URL that you can share with AI systems and tools that support the MCP protocol.
+
+I also intend to take it a step further and make it so that only the needed tools for the client will be retuned back instead of the entire MCP server because this would lead to overfill of the MCP client with unnecessary tools.
 
 
 ## Component Configuration Options
