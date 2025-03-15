@@ -5,7 +5,10 @@ interface MCPConfigOptions extends AgentComponentConfigOptions {
   //  ADD MCP SPECIFIC CONFIG OPTIONS HERE
 }
 
+
+
  type MCPTool = {
+    id: string;
     name: string;
     description: string;
     inputSchema: {
@@ -13,6 +16,8 @@ interface MCPConfigOptions extends AgentComponentConfigOptions {
       properties: Record<string, { type: string }>;
       required?: string[];
     };
+    execute?: (params: any) => Promise<any>;
+
 };
 
 

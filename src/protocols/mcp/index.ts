@@ -26,8 +26,7 @@ export function generateMCPServer(components: any[], buildPath: string) {
         return true;
       })
       .map(comp => {
-        const config = getAgentConfig(comp);
-        return mcpToolTransformer({ ...comp, config });
+        return mcpToolTransformer(comp);
       });
 
     console.log(`Generated ${tools.length} MCP tools from ${components.length} components`);

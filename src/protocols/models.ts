@@ -1,4 +1,6 @@
 interface AgentComponentConfigOptions {
+    id?: string;
+    name: string;
     type: string; // e.g., 'button', 'form'
     behavior: {
       type: string; // e.g., 'navigation', 'api'

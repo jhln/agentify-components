@@ -14,6 +14,7 @@ import {  AgentConfig, AgentComponent, withAgentConfig } from '@anvos/agentify-c
 
 // Example usage
 export const LoginButton = withAgentConfig({
+  name: 'LoginButton',
   type: 'button',
   behavior: { type: 'api', endpoint: '/api/login', method: 'POST' },
   label: 'Login Button',
@@ -38,6 +39,7 @@ export const LoginButton2: AgentComponent = () => {
 };
 
 LoginButton2.agentConfig = {
+  name: 'LoginButton2',
   type: 'button',
   behavior: { type: 'api', endpoint: '/api/login', method: 'POST' },
   label: 'Login Button',
@@ -53,6 +55,7 @@ LoginButton2.agentConfig = {
 // Example 3: Class Component with decorator
 //
 @AgentConfig({
+  name: 'HomeButton',
   type: 'button',
   behavior: { type: 'navigation', href: '/home' },
   label: 'Home Button',

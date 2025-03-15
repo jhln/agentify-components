@@ -8,6 +8,10 @@ import { z } from "zod";
     const toolDefinitions = tools.map(tool => {
       // Convert the JSON schema to a simplified zod schema representation
       // This is a basic conversion - complex schemas would need more handling
+
+      // Is there a better way to do this?
+
+
       const zodSchema = Object.entries(tool.inputSchema.properties || {}).map(([key, prop]: [string, any]) => {
         let zodType = 'z.string()';
         if (prop.type === 'number') zodType = 'z.number()';
@@ -26,7 +30,7 @@ import { z } from "zod";
       }).join(',\n');
 
       return `
-// Register ${tool.name} tool
+// Register ${tool.id} tool
 server.tool(
   "${tool.name}",
   "${tool.description}",
@@ -176,7 +180,11 @@ main().catch((error) => {
 
 
 
-  export function buildMCPFolder(tools: MCPTool[], buildPath: string) {
+  export function buildMCPFolder(tools: MCPTool[] | null, buildPath: string) {
+    if (!tools) {
+      console.error('No tools provided to buildMCPFolder');
+      return;
+    }
     const serverCode = mcpServerGenerator(tools);
     const packageJson = packageJsonGenerator();
     const tsconfig = tsconfigGenerator();
