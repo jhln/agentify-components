@@ -12,6 +12,15 @@ import { z } from "zod";
         let zodType = 'z.string()';
         if (prop.type === 'number') zodType = 'z.number()';
         if (prop.type === 'boolean') zodType = 'z.boolean()';
+        if (prop.type === 'array') zodType = 'z.array(z.string())';
+        if (prop.type === 'object') zodType = 'z.object({})';
+        if (prop.type === 'string') zodType = 'z.string()';
+        if (prop.type === 'integer') zodType = 'z.number()';
+        if (prop.type === 'float') zodType = 'z.number()';
+        if (prop.type === 'date') zodType = 'z.date()';
+        if (prop.type === 'datetime') zodType = 'z.date()';
+        if (prop.type === 'time') zodType = 'z.date()';
+        
         
         return `    ${key}: ${zodType}.describe("${prop.description || ''}")`;
       }).join(',\n');

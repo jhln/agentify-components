@@ -5,7 +5,7 @@
 
 A framework for adding semantic metadata to React components, making them "agent-aware" for AI systems and automation tools.
 
-# NOT FINISHED! Last updated 11th march, 2025
+# NOT FINISHED! Last updated 14th march, 2025
 
 ## Overview
 
@@ -52,7 +52,10 @@ This architecture ensures flexibility—developers can define components once an
 
 ## Usage
 
-### Agentifying a Search Bar
+### Specific type Component Agentification Examples (NEEDS TO BE UPDATED)
+
+
+#### Agentifying a Search Bar
 
 ```jsx
 import React from 'react';
@@ -83,7 +86,7 @@ export class ProductSearch extends React.Component {
 }
 ```
 
-### Agentifying a Form
+#### Agentifying a Form
 
 ```jsx
 import React from 'react';
@@ -118,7 +121,7 @@ export class LoginForm extends React.Component {
 }
 ```
 
-### Agentifying a Button
+#### Agentifying a Button
 
 ```jsx
 import React from 'react';
@@ -144,6 +147,96 @@ export class CheckoutButton extends React.Component {
   }
 }
 ```
+
+
+### Generic Component Agentification Examples
+
+The `@anvos/agentify-components` package provides several ways to add agent configuration to your React components:
+
+#### Example 1: Functional Component with HOC
+
+For functional components, you can use the `withAgentConfig` higher-order component to wrap your component with agent configuration:
+
+```tsx
+import { withAgentConfig } from '@anvos/agentify-components';
+
+export const LoginButton = withAgentConfig({
+  type: 'button',
+  behavior: { type: 'api', endpoint: '/api/login', method: 'POST' },
+  label: 'Login Button',
+  selector: '#login-btn',
+  description: 'Submits login form via API'
+})(() => {
+  return <button id="login-btn">Login</button>;
+});
+```
+
+#### Example 2: Functional Component with Direct Property Assignment
+
+Alternatively, you can create a functional component and directly assign the `agentConfig` property:
+
+```tsx
+import { AgentComponent } from '@anvos/agentify-components';
+
+export const LoginButton2: AgentComponent = () => {
+  return <button id="login-btn">Login</button>;
+};
+
+LoginButton2.agentConfig = {
+  type: 'button',
+  behavior: { type: 'api', endpoint: '/api/login', method: 'POST' },
+  label: 'Login Button',
+  description: 'Submits login form via API'
+};
+```
+
+#### Example 3: Class Component with Decorator
+
+For class components, you can use the `@AgentConfig` decorator directly:
+
+```tsx
+import { AgentConfig } from '@anvos/agentify-components';
+
+@AgentConfig({
+  type: 'button',
+  behavior: { type: 'navigation', href: '/home' },
+  label: 'Home Button',
+  description: 'Navigates to the home page'
+})
+class HomeButton extends React.Component {
+  render() {
+    return <button id="home-btn">Home</button>;
+  }
+}
+
+export { HomeButton };
+```
+
+### When to Use Each Approach
+
+- **HOC Pattern (Example 1)**: Best for when you need to apply agent configuration to existing functional components or when you want to maintain separation between the component and its configuration.
+- **Direct Property Assignment (Example 2)**: Simplest approach for functional components, useful when the component is defined and configured in the same file.
+- **Decorator Pattern (Example 3)**: Most elegant option for class components, providing a clean syntax with TypeScript decorators.
+
+### MCP Tool Schema Type Mappings
+
+When generating the MCP server, the following JSON Schema to Zod type mappings are used:
+
+| JSON Schema Type | Zod Schema Type |
+|-----------------|----------------|
+| `string`        | `z.string()`   |
+| `number`        | `z.number()`   |
+| `boolean`       | `z.boolean()`  |
+| `array`         | `z.array(z.string())` |
+| `object`        | `z.object({})` |
+| `integer`       | `z.number()`   |
+| `float`         | `z.number()`   |
+| `date`          | `z.date()`     |
+| `datetime`      | `z.date()`     |
+| `time`          | `z.date()`     |
+
+These mappings are used when converting the component metadata to the appropriate format for the MCP server tools.
+
 
 ## Generating MCP Server
 
@@ -199,18 +292,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
 
-
-
-----------
-
-
-Rewrite
-
-Overview of the Framework
-The framework consists of four main parts:
-
-Decorator (@AgentConfig): Attaches metadata to components, including common fields and protocol-specific configurations.
-Transformers: Adapt the generic metadata into protocol-specific formats (e.g., for protocols like MCP or XYZ).
-Generators: Produce server file content based on the transformed configurations, tailored to each protocol.
-CLI Tool: Processes components, applies the appropriate transformer and generator based on the target protocol, and outputs the server file.
-This design ensures flexibility—developers can define components once and support multiple protocols by adding new transformers and generators as needed.
