@@ -1,7 +1,7 @@
 import { buildMCPFolder } from "./generator";
 import { mcpToolTransformer } from "./transformers";
 import { getAgentConfig } from "../../utils/metadata";
-import { AgentComponent } from "./models";
+import { AgentComponent } from "../models";
 
 
 export function generateMCPServer(components: any[], buildPath: string) {

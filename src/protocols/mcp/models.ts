@@ -1,20 +1,11 @@
-// MCP-specific configuration interface
-interface MCPConfigOptions {
-    type: string; // e.g., 'button', 'form'
-    behavior: {
-      type: string; // e.g., 'navigation', 'api'
-      [key: string]: any; // Additional behavior properties
-    };
-    label?: string;
-    description: string;
-    inputSchema?: {
-      type: string;
-      properties: Record<string, { type: string }>;
-      required?: string[];
-    };
-  }
 
-  type MCPTool = {
+import { AgentComponentConfigOptions } from "../models";
+// MCP-specific configuration interface
+interface MCPConfigOptions extends AgentComponentConfigOptions {
+  //  ADD MCP SPECIFIC CONFIG OPTIONS HERE
+}
+
+ type MCPTool = {
     name: string;
     description: string;
     inputSchema: {
@@ -22,11 +13,8 @@ interface MCPConfigOptions {
       properties: Record<string, { type: string }>;
       required?: string[];
     };
-  };
-
-  interface AgentComponent extends React.FC {
-    agentConfig?: any;
-  }
+};
 
 
-  export type { MCPConfigOptions, MCPTool, AgentComponent };
+
+  export type { MCPConfigOptions, MCPTool };
