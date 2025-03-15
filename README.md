@@ -22,7 +22,7 @@ This framework adds a semantic layer to your components through decorators that:
 ## Installation
 
 ```bash
-npm install @anvos/agentify-components
+npm install @anvosio/agentify-components
 ```
 
 ## Core Concepts
