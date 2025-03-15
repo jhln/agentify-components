@@ -5,7 +5,7 @@
 
 A framework for adding semantic metadata to React components, making them "agent-aware" for AI systems and automation tools.
 
-# NOT FINISHED
+# NOT FINISHED! Last updated 11th march, 2025
 
 ## Overview
 
