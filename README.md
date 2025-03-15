@@ -29,7 +29,7 @@ npm install @anvos/agentify-components
 
 ### Component Types
 
-Agentify currently supports three main component types:
+Agentify currently supports three main component types: (THE BELOW HAVE BEEN REMOVED AND INSTEAD LIMITED TO API AND NAVIGATION BEHAVIOURS FOR NOW)
 
 - **Search Bars** - For search inputs with navigation or API behavior
 - **Forms** - For data collection with field-level metadata
@@ -52,7 +52,7 @@ This architecture ensures flexibility—developers can define components once an
 
 ## Usage
 
-### Specific type Component Agentification Examples (NEEDS TO BE UPDATED)
+### Specific type Component Agentification Examples (NEEDS TO BE UPDATED) 
 
 
 #### Agentifying a Search Bar
