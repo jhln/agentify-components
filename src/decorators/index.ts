@@ -1,8 +1,9 @@
 import 'reflect-metadata';
+import { AgentComponent, AgentComponentConfigOptions } from '../protocols/models';
 
-const AGENT_CONFIG_KEY = Symbol('agentConfig');
+export const AGENT_CONFIG_KEY = Symbol('agentConfig');
 
-// Decorator to attach MCP config to a class
+// Decorator to attach agent config to a class
 export function AgentConfig(config: any) {
   return function (target: Function) {
     // @ts-ignore - Reflect.defineMetadata comes from reflect-metadata package
@@ -10,4 +11,13 @@ export function AgentConfig(config: any) {
   };
 }
 
-export { AGENT_CONFIG_KEY };
+
+// HOC to attach agent config to a functional component
+export function withAgentConfig(config: AgentComponentConfigOptions) {
+  return function(component: React.FC): AgentComponent {
+    return Object.assign(component, { agentConfig: config });
+  };
+}
+
+
+

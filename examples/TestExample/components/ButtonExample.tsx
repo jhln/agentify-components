@@ -4,11 +4,27 @@
  */
 
 import React from 'react';
-import { AgentConfig } from '@anvos/agentify-components';
-import {  AgentComponent } from '@anvos/agentify-components';
+import {  AgentConfig, AgentComponent, withAgentConfig } from '@anvos/agentify-components';
 
 
-// Example 1: Functional Component with agentConfig (extra setup of exporting agentConfig attached to the Component)
+// Example 1: Functional Component with manually attaching agentConfig (extra setup of exporting agentConfig attached to the Component)
+// Since decorators only work directly with classes in TypeScript,
+// for functional components, you need to export manually
+
+
+// Example usage
+export const LoginButton = withAgentConfig({
+  type: 'button',
+  behavior: { type: 'api', endpoint: '/api/login', method: 'POST' },
+  label: 'Login Button',
+  selector: '#login-btn',
+  description: 'Submits login form via API'
+})(() => {
+  return <button id="login-btn">Login</button>;
+});
+
+
+// Example 2: Functional Component with manually attaching agentConfig (extra setup of exporting agentConfig attached to the Component)
 // Since decorators only work directly with classes in TypeScript,
 // for functional components, you need to export manually
 //
@@ -17,11 +33,11 @@ import {  AgentComponent } from '@anvos/agentify-components';
 
 
 // First define the component
-export const LoginButton: AgentComponent = () => {
+export const LoginButton2: AgentComponent = () => {
   return <button id="login-btn">Login</button>;
 };
 
-LoginButton.agentConfig = {
+LoginButton2.agentConfig = {
   type: 'button',
   behavior: { type: 'api', endpoint: '/api/login', method: 'POST' },
   label: 'Login Button',
@@ -34,7 +50,7 @@ LoginButton.agentConfig = {
 
 
 //
-// Example 2: Class Component with decorator
+// Example 3: Class Component with decorator
 //
 @AgentConfig({
   type: 'button',

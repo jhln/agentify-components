@@ -6,5 +6,5 @@
 // Export the decorators components
 
 
-export { AgentConfig } from './decorators';
-export * from './protocols/mcp/index';
+export * from './decorators';
+export * from './protocols';

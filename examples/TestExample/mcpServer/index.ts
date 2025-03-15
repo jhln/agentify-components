@@ -52,6 +52,28 @@ server.tool(
   }
 );
 
+
+// Register agent_undefined tool
+server.tool(
+  "agent_undefined",
+  "Tool for undefined",
+  {
+
+  },
+  async (params) => {
+    console.log("Executing agent_undefined with params:", params);
+    // Placeholder for tool implementation
+    return {
+      content: [
+        {
+          type: "text",
+          text: "Tool execution placeholder for agent_undefined"
+        }
+      ]
+    };
+  }
+);
+
   // Start the server
   const transport = new StdioServerTransport();
   await server.connect(transport);
