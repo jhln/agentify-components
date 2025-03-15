@@ -1,6 +1,6 @@
 # Agentify Components
 
-[![npm version](https://img.shields.io/badge/npm-v0.0.1-blue.svg)](https://www.npmjs.com/package/@anvos/agentify-components)
+[![npm version](https://img.shields.io/badge/npm-v0.0.2-blue.svg)](https://www.npmjs.com/package/@anvos/agentify-components)
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 A framework for adding semantic metadata to React components, making them "agent-aware" for AI systems and automation tools.

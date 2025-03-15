@@ -18,6 +18,23 @@ with an expanded "Thoughts" section to capture development reflections and lesso
 
 ## [Unreleased]
 
+## [0.0.2] - 2025-03-14
+
+### Added
+- Functional components could not be supported through decorators, so added HOC back i.e withAgentConfig
+
+### Changed
+- The examples
+
+### Fixed
+- MCP tools not being created correctly
+
+### Infrastructure
+- Moved around imports
+
+### Thoughts
+- Fixed a lot of stuff wrong with 0.0.1
+
 ## [0.0.1] - 2025-03-12
 
 ### Added
