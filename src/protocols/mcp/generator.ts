@@ -1,66 +1,67 @@
 import { MCPTool } from './models';
 import fs from 'fs';
 import path from 'path';
+import { z } from "zod";
   
   // MCP Generator: Produces a server file with tool definitions
   function mcpServerGenerator(tools: MCPTool[]) {
-    const toolDefinitions = tools.map(tool => `
-  const ${tool.name}: Tool = {
-    name: "${tool.name}",
-    description: "${tool.description}",
-    inputSchema: ${JSON.stringify(tool.inputSchema, null, 2)}
-  };
-    `).join('\n');
-  
-    return `
-  import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-  import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-  import {
-    CallToolRequest,
-    CallToolRequestSchema,
-    ListToolsRequestSchema,
-    Tool,
-  } from "@modelcontextprotocol/sdk/types.js";
-  
-  ${toolDefinitions}
-  
-  async function main() {
-    const server = new Server(
-      {
-        name: "MCP Server",
-        version: "1.0.0",
-      },
-      {
-        capabilities: {
-          tools: {},
-        },
-      }
-    );
-  
-    // Handle CallToolRequest to execute tools
-    server.setRequestHandler(
-      CallToolRequestSchema,
-      async (request: CallToolRequest) => {
-        console.log("Received CallToolRequest:", request);
-        // Placeholder for tool execution logic
-        return { content: [{ type: "text", text: "Tool execution placeholder" }] };
-      }
-    );
-  
-    // Handle ListToolsRequest to return available tools
-    server.setRequestHandler(ListToolsRequestSchema, async () => {
-      console.log("Received ListToolsRequest");
-      return {
-        tools: [${tools.map(tool => tool.name).join(', ')}],
-      };
-    });
-  
-    const transport = new StdioServerTransport();
-    await server.connect(transport);
-    console.log("MCP Server running on stdio");
+    const toolDefinitions = tools.map(tool => {
+      // Convert the JSON schema to a simplified zod schema representation
+      // This is a basic conversion - complex schemas would need more handling
+      const zodSchema = Object.entries(tool.inputSchema.properties || {}).map(([key, prop]: [string, any]) => {
+        let zodType = 'z.string()';
+        if (prop.type === 'number') zodType = 'z.number()';
+        if (prop.type === 'boolean') zodType = 'z.boolean()';
+        
+        return `    ${key}: ${zodType}.describe("${prop.description || ''}")`;
+      }).join(',\n');
+
+      return `
+// Register ${tool.name} tool
+server.tool(
+  "${tool.name}",
+  "${tool.description}",
+  {
+${zodSchema}
+  },
+  async (params) => {
+    console.log("Executing ${tool.name} with params:", params);
+    // Placeholder for tool implementation
+    return {
+      content: [
+        {
+          type: "text",
+          text: "Tool execution placeholder for ${tool.name}"
+        }
+      ]
+    };
   }
-  
-  main().catch(console.error);
+);`;
+    }).join('\n\n');
+
+    return `
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
+async function main() {
+  // Create server instance
+  const server = new McpServer({
+    name: "mcp-server",
+    version: "1.0.0",
+  });
+
+${toolDefinitions}
+
+  // Start the server
+  const transport = new StdioServerTransport();
+  await server.connect(transport);
+  console.error("MCP Server running on stdio");
+}
+
+main().catch((error) => {
+  console.error("Fatal error in main():", error);
+  process.exit(1);
+});
     `.trim();
   }
 
@@ -173,7 +174,7 @@ import path from 'path';
     const readme = readmeGenerator();
     const dockerFile = dockerFileGenerator();
     // Generate the other files in the folder
-    const folderPath = path.join(buildPath,  'mcpServer');
+    const folderPath = path.join(buildPath);
     fs.mkdirSync(folderPath, { recursive: true });
     fs.writeFileSync(path.join(folderPath, 'index.ts'), serverCode);
     fs.writeFileSync(path.join(folderPath, 'package.json'), packageJson);

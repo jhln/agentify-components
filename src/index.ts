@@ -7,4 +7,4 @@
 
 
 export { AgentConfig } from './decorators';
-export { generateMCPServer } from './protocols/mcp/index';
+export * from './protocols/mcp/index';

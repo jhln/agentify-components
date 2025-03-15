@@ -24,5 +24,9 @@ interface MCPConfigOptions {
     };
   };
 
+  interface AgentComponent extends React.FC {
+    agentConfig?: any;
+  }
 
-  export type { MCPConfigOptions, MCPTool };
+
+  export type { MCPConfigOptions, MCPTool, AgentComponent };
