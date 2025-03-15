@@ -1,13 +1,17 @@
 {
-  "name": "@anvos/agentify-components",
-  "version": "0.0.1",
+  "name": "@anvosio/agentify-components",
+  "version": "0.1.0",
   "description": "A framework for agentifying UI components with semantic metadata for AI agents",
   "main": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anvosio/agentify-components.git"
+  },
   "scripts": {
     "start": "node examples/simple-app/index.js",
     "test": "echo 'Tests coming soon!'",
     "build": "echo 'Build script coming soon!'",
-    "generate-mcp": "node scripts/generate-mcp-config.js"
+    "generate-mcp": "node examples/TestExample/generate.ts"
   },
   "dependencies": {
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
@@ -36,5 +40,12 @@
     "@types/react": "^19.0.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
-  }
+  },
+ "publishConfig": {
+ "access": "public"
+},
+ "bugs": {
+   "url": "https://github.com/anvosio/agentify-components/issues"
+ },
+ "homepage": "https://github.com/anvosio/agentify-components#readme"
 }
