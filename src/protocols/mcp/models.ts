@@ -16,7 +16,7 @@ interface MCPConfigOptions extends AgentComponentConfigOptions {
       properties: Record<string, { type: string }>;
       required?: string[];
     };
-    execute?: (params: any) => Promise<any>;
+    execute?:   string;
 
 };
 

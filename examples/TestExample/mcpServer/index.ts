@@ -1,5 +1,6 @@
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { handleApiCall, handleNavigation, handleDefault } from './handlers.js';
 
 async function main() {
   // Create server instance
@@ -9,7 +10,7 @@ async function main() {
   });
 
 
-// Register button_7c9e4dc8-22e5-4f3e-a2d3-93b8d3223940 tool
+// Register button_0117235c-428e-4cec-b215-ddb8e2bfa8c7 tool
 server.tool(
   "LoginButton",
   "Submits login form via API | Label: Login Button",
@@ -18,6 +19,11 @@ server.tool(
   },
   async (params) => {
     console.log("Executing LoginButton with params:", params);
+    
+
+    const config = {"name":"LoginButton","type":"button","behavior":{"type":"api","endpoint":"/api/login","method":"POST"},"label":"Login Button","selector":"#login-btn","description":"Submits login form via API"};
+    
+    const result = await handleApiCall(config, params);
     // Placeholder for tool implementation
     return {
       content: [
@@ -31,7 +37,7 @@ server.tool(
 );
 
 
-// Register button_5bdc8ff1-a4f6-4204-a07c-581b7a847f22 tool
+// Register button_b3a72ae8-6a16-4fe7-94f5-a04d50bc016a tool
 server.tool(
   "LoginButton2",
   "Submits login form via API | Label: Login Button",
@@ -40,6 +46,11 @@ server.tool(
   },
   async (params) => {
     console.log("Executing LoginButton2 with params:", params);
+    
+
+    const config = {"name":"LoginButton2","type":"button","behavior":{"type":"api","endpoint":"/api/login","method":"POST"},"label":"Login Button","description":"Submits login form via API"};
+    
+    const result = await handleApiCall(config, params);
     // Placeholder for tool implementation
     return {
       content: [
@@ -53,7 +64,7 @@ server.tool(
 );
 
 
-// Register button_e96ecf5f-e387-4a9f-bbfe-2851e0618df9 tool
+// Register button_86560759-de7c-4c11-b267-12904ba8504b tool
 server.tool(
   "HomeButton",
   "Navigates to the home page | Label: Home Button",
@@ -62,6 +73,9 @@ server.tool(
   },
   async (params) => {
     console.log("Executing HomeButton with params:", params);
+    
+      const config = {"name":"HomeButton","type":"button","behavior":{"type":"navigation","url":"/home"},"label":"Home Button","description":"Navigates to the home page"};
+      const result = await handleNavigation(config, params);
     // Placeholder for tool implementation
     return {
       content: [

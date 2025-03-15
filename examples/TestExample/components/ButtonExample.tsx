@@ -57,7 +57,7 @@ LoginButton2.agentConfig = {
 @AgentConfig({
   name: 'HomeButton',
   type: 'button',
-  behavior: { type: 'navigation', href: '/home' },
+  behavior: { type: 'navigation', url: '/home' },
   label: 'Home Button',
   // selector: '#home-btn',
   description: 'Navigates to the home page'
