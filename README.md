@@ -1,4 +1,5 @@
 https://www.reddit.com/user/Top-Chain001/
+https://www.reddit.com/r/opensource/comments/1jbqwxi/created_the_001_for_a_open_source_framework_that/
 
 # Agentify Components
 
